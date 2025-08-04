@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>General Ledger</title>
+    <link rel="stylesheet" href="general-ledger.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="haha.png" alt="Logo" class="logo-img">SpendMate
+            </a>
+        </div>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="general-ledger.html">General Ledger</a></li>
+            <li><a href="accounts.html">Accounts Payable/Receivable</a></li>
+            <li><a href="assets.html">Asset Management</a></li>
+            <li><a href="budgeting.html">Budgeting</a></li>
+            <li><a href="tax.html">Tax Management</a></li>
+            <li><a href="reporting.html">Financial Reporting</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h2>General Ledger</h2>
+        <form id="ledgerForm" autocomplete="off">
+            <input type="text" id="accountName" placeholder="Account Name" required>
+            <input type="number" id="amount" placeholder="Amount" required>
+            <button type="submit">Add Entry</button>
+        </form>
+        <table id="ledgerTable">
+            <thead>
+                <tr>
+                    <th>Account Name</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Entries will appear here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const ledgerForm = document.getElementById('ledgerForm');
+        const ledgerTableBody = document.querySelector('#ledgerTable tbody');
+
+        ledgerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const accountName = document.getElementById('accountName').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+
+            if (accountName && amount) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${accountName}</td><td>${amount}</td>`;
+                ledgerTableBody.appendChild(row);
+
+                ledgerForm.reset();
+            }
+        });
+    </script>
+</body>

@@ -1,0 +1,90 @@
+body, * {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9); /* same as styles.css */
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    background: rgba(0,0,0,0.7);
+    min-height: 100vh;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+}
+
+.logo a {
+    font-size: 33px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logo-img {
+    height: 40px;
+    width: 60px;
+    margin-right: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar ul li {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    padding: 12px 30px;
+    display: block;
+    border-radius: 6px;
+    transition: color 0.3s, background 0.3s;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.sidebar ul li a:hover {
+    color: aquamarine; /* same as styles.css */
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 2px 8px rgba(134,168,231,0.15);
+}
+
+.main-content {
+    flex: 1;
+    padding: 60px;
+    color: #333;
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    margin: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.ledgerTable th{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    
+}
