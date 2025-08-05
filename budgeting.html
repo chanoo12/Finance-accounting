@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Budgeting - SpendMate Finance</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="budgeting.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="haha.png" alt="Logo" class="logo-img">SpendMate
+            </a>
+        </div>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="general-ledger.html">General Ledger</a></li>
+            <li><a href="accounts.html">Accounts Payable/Receivable</a></li>
+            <li><a href="budgeting.html" class="active">Budgeting</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h2>Budget Planning</h2>
+        
+        <div class="form-container">
+            <h3>Add New Budget Entry</h3>
+            <form id="budgetForm">
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <input type="text" id="category" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" required>
+                </div>
+                <button type="submit" class="btn-primary">Add Budget Entry</button>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h3>Budget Entries</h3>
+            <table id="budgetTable">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Budget entries will be listed here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Fetch budget entries
+        async function fetchBudgetEntries() {
+            try {
+                const response = await fetch('http://localhost:3000/api/budget');
+                const entries = await response.json();
+                const tbody = document.querySelector('#budgetTable tbody');
+                tbody.innerHTML = '';
+                
+                entries.forEach(entry => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${entry.category}</td>
+                        <td>$${entry.amount.toFixed(2)}</td>
+                        <td>${new Date(entry.start_date).toLocaleDateString()}</td>
+                        <td>${new Date(entry.end_date).toLocaleDateString()}</td>
+                        <td>
+                            <button onclick="editBudget('${entry.budget_id}')" class="btn-edit">Edit</button>
+                            <button onclick="deleteBudget('${entry.budget_id}')" class="btn-delete">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching budget entries:', error);
+            }
+        }
+
+        // Add budget entry
+        document.getElementById('budgetForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                category: document.getElementById('category').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                start_date: document.getElementById('startDate').value,
+                end_date: document.getElementById('endDate').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/budget', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    e.target.reset();
+                    fetchBudgetEntries();
+                }
+            } catch (error) {
+                console.error('Error adding budget entry:', error);
+            }
+        });
+
+        // Delete budget entry
+        async function deleteBudget(id) {
+            if (confirm('Are you sure you want to delete this budget entry?')) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/budget/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        fetchBudgetEntries();
+                    }
+                } catch (error) {
+                    console.error('Error deleting budget entry:', error);
+                }
+            }
+        }
+
+        // Edit budget entry (simplified version)
+        async function editBudget(id) {
+            // This is a simplified implementation
+            // You might want to add a modal or form for editing
+            console.log('Edit budget entry:', id);
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', fetchBudgetEntries);
+    </script>
+</body>
+</html>

@@ -25,39 +25,231 @@
     </div>
     <div class="main-content">
         <h2>General Ledger</h2>
-        <form id="ledgerForm" autocomplete="off">
-            <input type="text" id="accountName" placeholder="Account Name" required>
-            <input type="number" id="amount" placeholder="Amount" required>
-            <button type="submit">Add Entry</button>
-        </form>
-        <table id="ledgerTable">
-            <thead>
-                <tr>
-                    <th>Account Name</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Entries will appear here -->
-            </tbody>
-        </table>
+        <div class="form-container">
+            <h3>Add New Entry</h3>
+            <form id="ledgerForm" autocomplete="off">
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="debit">Debit:</label>
+                    <input type="number" id="debit" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="credit">Credit:</label>
+                    <input type="number" id="credit" step="0.01" min="0">
+                </div>
+                <button type="submit" class="btn-primary">Add Entry</button>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h3>Ledger Entries</h3>
+            <table id="ledgerTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Balance</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Entries will appear here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h3>Edit Entry</h3>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+                    <div class="form-group">
+                        <label for="editDate">Date:</label>
+                        <input type="date" id="editDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Description:</label>
+                        <input type="text" id="editDescription" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDebit">Debit:</label>
+                        <input type="number" id="editDebit" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCredit">Credit:</label>
+                        <input type="number" id="editCredit" step="0.01" min="0">
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                        <button type="button" class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
     <script>
-        const ledgerForm = document.getElementById('ledgerForm');
-        const ledgerTableBody = document.querySelector('#ledgerTable tbody');
+        // Fetch all ledger entries
+        async function fetchLedgerEntries() {
+            try {
+                const response = await fetch('http://localhost:3000/api/ledger');
+                const entries = await response.json();
+                const tbody = document.querySelector('#ledgerTable tbody');
+                tbody.innerHTML = '';
+                
+                entries.forEach(entry => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(entry.date).toLocaleDateString()}</td>
+                        <td>${entry.description}</td>
+                        <td>${entry.debit || ''}</td>
+                        <td>${entry.credit || ''}</td>
+                        <td>${entry.balance}</td>
+                        <td>
+                            <button onclick="openEditModal('${entry.entry_id}')" class="btn-edit">Edit</button>
+                            <button onclick="deleteEntry('${entry.entry_id}')" class="btn-delete">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching entries:', error);
+                alert('Failed to load ledger entries');
+            }
+        }
 
-        ledgerForm.addEventListener('submit', function(e) {
+        // Add new entry
+        document.getElementById('ledgerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const accountName = document.getElementById('accountName').value.trim();
-            const amount = document.getElementById('amount').value.trim();
+            const formData = {
+                date: document.getElementById('date').value,
+                description: document.getElementById('description').value,
+                debit: parseFloat(document.getElementById('debit').value) || null,
+                credit: parseFloat(document.getElementById('credit').value) || null,
+                balance: calculateBalance(
+                    parseFloat(document.getElementById('debit').value) || 0,
+                    parseFloat(document.getElementById('credit').value) || 0
+                )
+            };
 
-            if (accountName && amount) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${accountName}</td><td>${amount}</td>`;
-                ledgerTableBody.appendChild(row);
+            try {
+                const response = await fetch('http://localhost:3000/api/ledger', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-                ledgerForm.reset();
+                if (response.ok) {
+                    e.target.reset();
+                    fetchLedgerEntries();
+                } else {
+                    throw new Error('Failed to add entry');
+                }
+            } catch (error) {
+                console.error('Error adding entry:', error);
+                alert('Failed to add entry');
             }
         });
+
+        // Edit entry
+        async function openEditModal(entryId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/ledger/${entryId}`);
+                const entry = await response.json();
+                
+                document.getElementById('editId').value = entry.entry_id;
+                document.getElementById('editDate').value = entry.date.split('T')[0];
+                document.getElementById('editDescription').value = entry.description;
+                document.getElementById('editDebit').value = entry.debit || '';
+                document.getElementById('editCredit').value = entry.credit || '';
+                
+                document.getElementById('editModal').style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching entry:', error);
+                alert('Failed to load entry details');
+            }
+        }
+
+        // Update entry
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const entryId = document.getElementById('editId').value;
+            const formData = {
+                date: document.getElementById('editDate').value,
+                description: document.getElementById('editDescription').value,
+                debit: parseFloat(document.getElementById('editDebit').value) || null,
+                credit: parseFloat(document.getElementById('editCredit').value) || null,
+                balance: calculateBalance(
+                    parseFloat(document.getElementById('editDebit').value) || 0,
+                    parseFloat(document.getElementById('editCredit').value) || 0
+                )
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/ledger/${entryId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    closeEditModal();
+                    fetchLedgerEntries();
+                } else {
+                    throw new Error('Failed to update entry');
+                }
+            } catch (error) {
+                console.error('Error updating entry:', error);
+                alert('Failed to update entry');
+            }
+        });
+
+        // Delete entry
+        async function deleteEntry(entryId) {
+            if (confirm('Are you sure you want to delete this entry?')) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/ledger/${entryId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        fetchLedgerEntries();
+                    } else {
+                        throw new Error('Failed to delete entry');
+                    }
+                } catch (error) {
+                    console.error('Error deleting entry:', error);
+                    alert('Failed to delete entry');
+                }
+            }
+        }
+
+        // Helper functions
+        function calculateBalance(debit, credit) {
+            return debit - credit;
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            document.getElementById('editForm').reset();
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', fetchLedgerEntries);
     </script>
 </body>
+</html>
