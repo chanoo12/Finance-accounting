@@ -88,3 +88,12 @@ body {
     margin-top: 20px;
     
 }
+
+#ledgerTable th:nth-child(2) {
+    padding: 10px 65px; 
+}
+
+#ledgerTable td:nth-child(2) {
+    padding: 10px 65px; 
+}
+

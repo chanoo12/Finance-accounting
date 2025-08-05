@@ -56,7 +56,6 @@ body {
     color: #ffffff;
     font-size: 18px;
     font-weight: bold;
-    font-style: italic;
     text-decoration: none;
     padding: 12px 30px;
     display: block;
@@ -124,5 +123,3 @@ body {
     transition: background 0.3s, color 0.3s;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
-
-.card

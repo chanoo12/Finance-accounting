@@ -4,11 +4,9 @@ body {
     background-position: center;
     position: relative;
     background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
-    display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    
 }
 
 .navbar {
@@ -62,7 +60,6 @@ ul li a {
     color: #ffffff;
     font-size: 18px;
     font-weight: bold;
-    font-style: italic;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -80,7 +77,6 @@ ul li a:hover {
     margin: 60px auto 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .login-container h2 {
