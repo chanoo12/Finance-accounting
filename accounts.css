@@ -1,16 +1,101 @@
-/* Accounts Page Styles */
+/* Shared Font and Background */
+body, * {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    background: rgba(0,0,0,0.7);
+    min-height: 100vh;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+}
+
+.logo a {
+    font-size: 33px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 40px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logo-img {
+    height: 40px;
+    width: 60px;
+    margin-right: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar ul li {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    padding: 12px 30px;
+    display: block;
+    border-radius: 6px;
+    transition: color 0.3s, background 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    color: aquamarine;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 2px 8px rgba(134,168,231,0.15);
+}
+
+.main-content {
+    flex: 1;
+    padding: 60px;
+    color: #333;
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    margin: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
 .accounts-section {
     margin-bottom: 40px;
-    background: rgba(255,255,255,0.9);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: linear-gradient(135deg, #86a8e7 60%, #91eac9 100%);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
 }
 
 .accounts-section h2 {
-    color: #333;
+    color: #007bff;
+    font-size: 26px;
     margin-bottom: 20px;
-    border-bottom: 2px solid #86a8e7;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
     padding-bottom: 10px;
 }
 
@@ -20,6 +105,7 @@
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
 }
 
 .form-container h3 {
@@ -40,9 +126,9 @@
 
 .form-group input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 14px;
 }
 
@@ -71,28 +157,29 @@ th {
 
 /* Button Styles */
 .btn-primary {
-    background-color: #86a8e7;
+    background-color: #007bff;
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: bold;
+    font-size: 14px;
     transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #7f7fd5;
+    background-color: #0056b3;
 }
 
 .btn-delete {
     background-color: #ff6b6b;
     color: white;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
     transition: background-color 0.3s;
 }
 
@@ -100,18 +187,18 @@ th {
     background-color: #ff5252;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-    .accounts-section {
-        margin-bottom: 20px;
-        padding: 15px;
+    .main-content {
+        margin: 20px;
+        padding: 30px;
     }
 
-    .form-container {
-        padding: 15px;
+    .accounts-section {
+        padding: 20px;
     }
 
     th, td {
-        padding: 8px;
+        padding: 10px;
     }
 }

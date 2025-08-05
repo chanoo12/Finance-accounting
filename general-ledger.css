@@ -3,7 +3,7 @@ body, * {
 }
 
 body {
-    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9); /* same as styles.css */
+    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -27,7 +27,6 @@ body {
     align-items: center;
     text-decoration: none;
     margin-bottom: 40px;
-    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -63,12 +62,10 @@ body {
     display: block;
     border-radius: 6px;
     transition: color 0.3s, background 0.3s;
-    font-family: Arial, Helvetica, sans-serif;
-    letter-spacing: 0.5px;
 }
 
 .sidebar ul li a:hover {
-    color: aquamarine; /* same as styles.css */
+    color: aquamarine;
     background: rgba(255,255,255,0.1);
     box-shadow: 0 2px 8px rgba(134,168,231,0.15);
 }
@@ -83,13 +80,25 @@ body {
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
+.main-content h2 {
+    color: #007bff;
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding-bottom: 10px;
+}
+
 /* Form styles */
 .form-container {
-    background: rgba(255,255,255,0.9);
-    padding: 20px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #86a8e7 60%, #91eac9 100%);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.form-container h3 {
+    color: #ffffff;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .form-group {
@@ -98,26 +107,35 @@ body {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    color: #fff;
     font-weight: 500;
-    color: #333;
 }
 
 .form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: none;
+    border-radius: 6px;
     font-size: 14px;
-    background: white;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: 2px solid #ffffff;
 }
 
 /* Table styles */
 .table-container {
-    background: rgba(255,255,255,0.9);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.table-container h3 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
 table {
@@ -127,7 +145,7 @@ table {
 }
 
 th, td {
-    padding: 12px;
+    padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -140,18 +158,19 @@ th {
 
 /* Button styles */
 .btn-primary {
-    background-color: #86a8e7;
+    background-color: #007bff;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: bold;
+    font-size: 14px;
     transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #7f7fd5;
+    background-color: #0056b3;
 }
 
 .btn-secondary {
@@ -181,6 +200,10 @@ th {
     transition: background-color 0.3s;
 }
 
+.btn-edit:hover {
+    background-color: #7f7fd5;
+}
+
 .btn-delete {
     background-color: #ff6b6b;
     color: white;
@@ -190,10 +213,6 @@ th {
     cursor: pointer;
     font-size: 12px;
     transition: background-color 0.3s;
-}
-
-.btn-edit:hover {
-    background-color: #7f7fd5;
 }
 
 .btn-delete:hover {
@@ -227,4 +246,29 @@ th {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        margin: 20px;
+        padding: 30px;
+    }
+
+    .form-container,
+    .table-container {
+        padding: 15px;
+    }
+
+    .form-group input {
+        padding: 8px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+    }
 }

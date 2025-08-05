@@ -10,4 +10,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         alert('Login successful!');
         // Redirect or further logic here
     } else {
-        errorMsg.textContent =
+        errorMsg.textContent = 'Invalid username or password.';
+        errorMsg.style.color = 'red';
+
+    }
+});
