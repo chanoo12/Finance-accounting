@@ -54,7 +54,6 @@ body {
     color: #ffffff;
     font-size: 18px;
     font-weight: bold;
-    font-style: italic;
     text-decoration: none;
     padding: 12px 30px;
     display: block;
@@ -72,3 +71,4 @@ body {
     flex: 1;
     padding: 60px;
     color: #333;
+}
