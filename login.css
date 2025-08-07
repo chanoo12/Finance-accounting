@@ -1,22 +1,24 @@
-body {
-    font-family: Arial, sans-serif;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+/* === General Styles === */
+html, body {
+    font-family: 'Inter', 'Poppins', 'Quicksand', sans-serif;
+    background-color: #FDFFFA;
     margin: 0;
-    
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
+/* === Navbar === */
 .navbar {
     width: 100%;
-    background: transparent;
-    padding: 20px 0 0 0;
+    padding: 10px 0;
     display: flex;
     justify-content: center;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .navdiv {
@@ -28,12 +30,13 @@ body {
 }
 
 .logo a {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins';
     font-size: 33px;
-    color: #ffffff;
+    color: #333135;
     display: flex;
     align-items: center;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .logo-img {
@@ -59,7 +62,7 @@ ul li:last-child {
 }
 
 ul li a {
-    color: #ffffff;
+    color: #4A4A4A;
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
@@ -70,46 +73,60 @@ ul li a:hover {
     color: aquamarine;
 }
 
+/* === Login Form === */
 .login-container {
-    background: #fff;
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     padding: 30px 40px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); /* more visible shadow */
     width: 300px;
-    margin: 60px auto 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
 }
+
 
 .login-container h2 {
     margin-bottom: 20px;
     text-align: center;
+    color: white;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"],
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
 }
 
 .login-container input[type="text"],
 .login-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 16px 0;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    outline: none;
 }
 
 .login-container button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: #fff;
+    background: #0c1821;
+    color: white; /* your requested font color */
     border: none;
-    border-radius: 4px;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 .login-container button:hover {
     background: #0056b3;
 }
 
+/* === Error Message === */
 .error {
     color: red;
     text-align: center;
