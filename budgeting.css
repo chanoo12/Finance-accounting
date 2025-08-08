@@ -1,42 +1,26 @@
-/* Shared Font and Background */
-body, * {
-    font-family: Arial, Helvetica, sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
-    margin: 0;
+    font-family: 'Inter', 'Poppins', 'Quicksand', sans-serif;
+    background-color: #FDFFFA;
     min-height: 100vh;
     display: flex;
 }
 
 .sidebar {
-    width: 260px;
-    background: rgba(0,0,0,0.7);
     min-height: 100vh;
+    background-color: #262c44; 
+    width: 260px;
     padding: 30px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
 }
 
-.logo a {
-    font-size: 33px;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    margin-bottom: 40px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.logo-img {
-    height: 40px;
-    width: 60px;
-    margin-right: 8px;
-}
 
 .sidebar ul {
     list-style: none;
@@ -54,7 +38,7 @@ body {
 }
 
 .sidebar ul li a {
-    color: #ffffff;
+    color: white;
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
@@ -67,39 +51,40 @@ body {
 .sidebar ul li a:hover {
     color: aquamarine;
     background: rgba(255,255,255,0.1);
-    box-shadow: 0 2px 8px rgba(134,168,231,0.15);
 }
 
 .main-content {
     flex: 1;
-    padding: 60px;
+    padding: 30px 60px;
     color: #333;
-    background: rgba(255,255,255,0.85);
+    background-color: #FDFFFA;
     border-radius: 16px;
     margin: 40px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-top: 0;
 }
 
-/* Budgeting Page Section Titles */
+
 .main-content h2 {
-    color: #007bff;
+    color: #333135;
     margin-bottom: 30px;
     border-bottom: 2px solid rgba(0,0,0,0.05);
     padding-bottom: 10px;
 }
 
-/* Form Container */
+
 .form-container {
-    background: linear-gradient(135deg, #86a8e7 60%, #91eac9 100%);
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     padding: 25px;
     border-radius: 12px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* deeper and darker shadow */
 }
 
+
 .form-container h3 {
-    color: #ffffff;
+    color: #333;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .form-group {
@@ -128,11 +113,12 @@ body {
 
 /* Table Container */
 .table-container {
-    background: rgba(255,255,255,0.95);
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* deeper and darker shadow to match */
 }
+
 
 .table-container h3 {
     color: #333;
@@ -143,6 +129,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    background: rgba(255,255,255,0.95);
 }
 
 th, td {
@@ -157,7 +144,6 @@ th {
     color: #333;
 }
 
-/* Button Styles */
 .btn-primary {
     background-color: #007bff;
     color: white;
@@ -205,7 +191,6 @@ th {
     background-color: #ff5252;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .main-content {
         margin: 20px;
