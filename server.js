@@ -127,21 +127,36 @@ app.delete('/api/ledger/:id', async (req, res) => {
 });
 
 // Accounts Payable Routes
+
+// ACCOUNTS PAYABLE CRUD
 app.get('/api/accounts-payable', async (req, res) => {
     try {
-        const entries = await sql`SELECT * FROM accounts_payable ORDER BY due_date ASC`;
+        const entries = await sql`SELECT * FROM accounts_payable ORDER BY ap_id DESC`;
         res.json(entries);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
+app.get('/api/accounts-payable/:id', async (req, res) => {
+    try {
+        const result = await sql`SELECT * FROM accounts_payable WHERE ap_id = ${req.params.id}`;
+        if (result.length > 0) {
+            res.json(result[0]);
+        } else {
+            res.status(404).json({ error: 'Entry not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.post('/api/accounts-payable', async (req, res) => {
-    const { supplier_id, amount, due_date } = req.body;
+    const { supplier_id, supplier_name, amount, due_date } = req.body;
     try {
         const result = await sql`
-            INSERT INTO accounts_payable (supplier_id, amount, due_date)
-            VALUES (${supplier_id}, ${amount}, ${due_date})
+            INSERT INTO accounts_payable (supplier_id, supplier_name, amount, due_date)
+            VALUES (${supplier_id}, ${supplier_name}, ${amount}, ${due_date})
             RETURNING *`;
         res.status(201).json(result[0]);
     } catch (error) {
@@ -150,11 +165,12 @@ app.post('/api/accounts-payable', async (req, res) => {
 });
 
 app.put('/api/accounts-payable/:id', async (req, res) => {
-    const { supplier_id, amount, due_date } = req.body;
+    const { supplier_id, supplier_name, amount, due_date } = req.body;
     try {
         const result = await sql`
             UPDATE accounts_payable 
             SET supplier_id = ${supplier_id},
+                supplier_name = ${supplier_name},
                 amount = ${amount},
                 due_date = ${due_date}
             WHERE ap_id = ${req.params.id}
@@ -186,21 +202,36 @@ app.delete('/api/accounts-payable/:id', async (req, res) => {
 });
 
 // Accounts Receivable Routes
+
+// ACCOUNTS RECEIVABLE CRUD
 app.get('/api/accounts-receivable', async (req, res) => {
     try {
-        const entries = await sql`SELECT * FROM accounts_receivable ORDER BY due_date ASC`;
+        const entries = await sql`SELECT * FROM accounts_receivable ORDER BY ar_id DESC`;
         res.json(entries);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
+app.get('/api/accounts-receivable/:id', async (req, res) => {
+    try {
+        const result = await sql`SELECT * FROM accounts_receivable WHERE ar_id = ${req.params.id}`;
+        if (result.length > 0) {
+            res.json(result[0]);
+        } else {
+            res.status(404).json({ error: 'Entry not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.post('/api/accounts-receivable', async (req, res) => {
-    const { customer_id, amount, due_date } = req.body;
+    const { customer_id, customer_name, amount, due_date } = req.body;
     try {
         const result = await sql`
-            INSERT INTO accounts_receivable (customer_id, amount, due_date)
-            VALUES (${customer_id}, ${amount}, ${due_date})
+            INSERT INTO accounts_receivable (customer_id, customer_name, amount, due_date)
+            VALUES (${customer_id}, ${customer_name}, ${amount}, ${due_date})
             RETURNING *`;
         res.status(201).json(result[0]);
     } catch (error) {
@@ -209,11 +240,12 @@ app.post('/api/accounts-receivable', async (req, res) => {
 });
 
 app.put('/api/accounts-receivable/:id', async (req, res) => {
-    const { customer_id, amount, due_date } = req.body;
+    const { customer_id, customer_name, amount, due_date } = req.body;
     try {
         const result = await sql`
             UPDATE accounts_receivable 
             SET customer_id = ${customer_id},
+                customer_name = ${customer_name},
                 amount = ${amount},
                 due_date = ${due_date}
             WHERE ar_id = ${req.params.id}

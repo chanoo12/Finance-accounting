@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Budgeting - SpendMate Finance</title>
+    <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="budgeting.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Quicksand&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="haha.png" alt="Logo" class="logo-img">SpendMate
+            </a>
+        </div>
         <ul>
+            <li><a href="home.html">Home</a></li>
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="general-ledger.html">General Ledger</a></li>
             <li><a href="accounts.html">Accounts Payable/Receivable</a></li>
+            <li><a href="budgeting.html" class="active">Budgeting</a></li>
         </ul>
     </div>
 
@@ -79,6 +86,7 @@
                         <td>
                             <button onclick="editBudget('${entry.budget_id}')" class="btn-edit">Edit</button>
                             <button onclick="deleteBudget('${entry.budget_id}')" class="btn-delete">Delete</button>
+                               <button onclick="viewBudget('${entry.budget_id}')" class="btn-view">View</button>
                         </td>
                     `;
                     tbody.appendChild(row);
@@ -133,6 +141,39 @@
             }
         }
 
+           // View budget entry
+           async function viewBudget(id) {
+               try {
+                   const response = await fetch(`/api/budget/${id}`);
+                   const entry = await response.json();
+                   alert(`Category: ${entry.category}\nAmount: ${entry.amount}\nStart: ${entry.start_date}\nEnd: ${entry.end_date}`);
+               } catch (error) {
+                   alert('Failed to view budget entry');
+               }
+           }
+
+           // Edit budget entry (simple prompt-based)
+           async function editBudget(id) {
+               try {
+                   const response = await fetch(`/api/budget/${id}`);
+                   const entry = await response.json();
+                   const category = prompt('Category:', entry.category);
+                   const amount = prompt('Amount:', entry.amount);
+                   const start_date = prompt('Start Date:', entry.start_date);
+                   const end_date = prompt('End Date:', entry.end_date);
+                   if (category && amount && start_date && end_date) {
+                       await fetch(`/api/budget/${id}`, {
+                           method: 'PUT',
+                           headers: { 'Content-Type': 'application/json' },
+                           body: JSON.stringify({ category, amount, start_date, end_date })
+                       });
+                       fetchBudgetEntries();
+                   }
+               } catch (error) {
+                   alert('Failed to edit budget entry');
+               }
+           }
+
         // Edit budget entry (simplified version)
         async function editBudget(id) {
             // This is a simplified implementation
@@ -142,6 +183,10 @@
 
         // Load data when page loads
         document.addEventListener('DOMContentLoaded', fetchBudgetEntries);
+        // Load CRUD.js for shared logic
+        var script = document.createElement('script');
+        script.src = 'crud.js';
+        document.body.appendChild(script);
     </script>
 </body>
 </html>

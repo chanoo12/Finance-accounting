@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts - SpendMate Finance</title>
     <link rel="stylesheet" href="accounts.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Quicksand&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="haha.png" alt="Logo" class="logo-img">SpendMate
+            </a>
+        </div>
         <ul>
+            <li><a href="home.html">Home</a></li>
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="general-ledger.html">General Ledger</a></li>
+            <li><a href="accounts.html" class="active">Accounts Payable/Receivable</a></li>
             <li><a href="budgeting.html">Budgeting</a></li>
         </ul>
     </div>
@@ -21,6 +27,10 @@
             <div class="form-container">
                 <h3>Add New Payable</h3>
                 <form id="payableForm">
+                    <div class="form-group">
+                        <label for="payableSupplierName">Supplier Name:</label>
+                        <input type="text" id="payableSupplierName" required>
+                    </div>
                     <div class="form-group">
                         <label for="payableSupplier">Supplier ID:</label>
                         <input type="number" id="payableSupplier" required>
@@ -42,14 +52,14 @@
                     <thead>
                         <tr>
                             <th>Supplier ID</th>
+                            <th>Supplier Name</th>
                             <th>Amount</th>
                             <th>Due Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Payables will be listed here -->
-                    </tbody>
+                    <tbody id="accountsPayableTableBody"></tbody>
+
                 </table>
             </div>
         </div>
@@ -59,6 +69,10 @@
             <div class="form-container">
                 <h3>Add New Receivable</h3>
                 <form id="receivableForm">
+                    <div class="form-group">
+                        <label for="receivableCustomerName">Customer Name:</label>
+                        <input type="text" id="receivableCustomerName" required>
+                    </div>
                     <div class="form-group">
                         <label for="receivableCustomer">Customer ID:</label>
                         <input type="number" id="receivableCustomer" required>
@@ -80,47 +94,48 @@
                     <thead>
                         <tr>
                             <th>Customer ID</th>
+                            <th>Customer Name</th>
                             <th>Amount</th>
                             <th>Due Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Receivables will be listed here -->
-                    </tbody>
+                    <tbody id="accountsPayableTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <script>
-        // Fetch Accounts Payable
+        // Fetch and render Accounts Payable
         async function fetchPayables() {
             try {
-                const response = await fetch('http://localhost:3000/api/accounts-payable');
+                const response = await fetch('/api/accounts-payable');
                 const payables = await response.json();
                 const tbody = document.querySelector('#payableTable tbody');
                 tbody.innerHTML = '';
-                
                 payables.forEach(payable => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${payable.supplier_id}</td>
-                        <td>$${payable.amount.toFixed(2)}</td>
+                        <td>${payable.supplier_name}</td>
+                        <td>$${Number(payable.amount).toFixed(2)}</td>
                         <td>${new Date(payable.due_date).toLocaleDateString()}</td>
                         <td>
-                            <button onclick="deletePayable(${payable.ap_id})" class="btn-delete">Delete</button>
+                            <button class="btn-delete" onclick="deletePayable(${payable.ap_id})">Delete</button>
+                            <button class="btn-edit" onclick="editPayable(${payable.ap_id})">Edit</button>
+                            <button class="btn-view" onclick="viewPayable(${payable.ap_id})">View</button>
                         </td>
                     `;
                     tbody.appendChild(row);
                 });
             } catch (error) {
-                console.error('Error fetching payables:', error);
+                alert('Failed to load payables');
             }
         }
 
         // Fetch Accounts Receivable
-        async function fetchReceivables() {
+        async function fetchReceivables() {11
             try {
                 const response = await fetch('http://localhost:3000/api/accounts-receivable');
                 const receivables = await response.json();
@@ -131,10 +146,13 @@
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${receivable.customer_id}</td>
-                        <td>$${receivable.amount.toFixed(2)}</td>
+                        <td>${receivable.customer_name}</td>
+                        <td>$${Number(receivable.amount).toFixed(2)}</td>
                         <td>${new Date(receivable.due_date).toLocaleDateString()}</td>
                         <td>
                             <button onclick="deleteReceivable(${receivable.ar_id})" class="btn-delete">Delete</button>
+                            <button onclick="viewReceivable(${receivable.ar_id})" class="btn-view">View</button>
+                            <button onclick="editReceivable(${receivable.ar_id})" class="btn-edit">Edit</button>
                         </td>
                     `;
                     tbody.appendChild(row);
@@ -149,6 +167,7 @@
             e.preventDefault();
             const formData = {
                 supplier_id: parseInt(document.getElementById('payableSupplier').value),
+                supplier_name: document.getElementById('payableSupplierName').value,
                 amount: parseFloat(document.getElementById('payableAmount').value),
                 due_date: document.getElementById('payableDueDate').value
             };
@@ -176,6 +195,7 @@
             e.preventDefault();
             const formData = {
                 customer_id: parseInt(document.getElementById('receivableCustomer').value),
+                customer_name: document.getElementById('receivableCustomerName').value,
                 amount: parseFloat(document.getElementById('receivableAmount').value),
                 due_date: document.getElementById('receivableDueDate').value
             };
@@ -215,6 +235,39 @@
             }
         }
 
+           // View Payable
+           async function viewPayable(id) {
+               try {
+                   const response = await fetch(`/api/accounts-payable/${id}`);
+                   const entry = await response.json();
+                   alert(`Supplier ID: ${entry.supplier_id}\nSupplier Name: ${entry.supplier_name}\nAmount: ${entry.amount}\nDue Date: ${entry.due_date}`);
+               } catch (error) {
+                   alert('Failed to view payable');
+               }
+           }
+
+           // Edit Payable (simple prompt-based)
+           async function editPayable(id) {
+               try {
+                   const response = await fetch(`/api/accounts-payable/${id}`);
+                   const entry = await response.json();
+                   const supplier_id = prompt('Supplier ID:', entry.supplier_id);
+                   const supplier_name = prompt('Supplier Name:', entry.supplier_name);
+                   const amount = prompt('Amount:', entry.amount);
+                   const due_date = prompt('Due Date:', entry.due_date);
+                   if (supplier_id && supplier_name && amount && due_date) {
+                       await fetch(`/api/accounts-payable/${id}`, {
+                           method: 'PUT',
+                           headers: { 'Content-Type': 'application/json' },
+                           body: JSON.stringify({ supplier_id, supplier_name, amount, due_date })
+                       });
+                       fetchPayables();
+                   }
+               } catch (error) {
+                   alert('Failed to edit payable');
+               }
+           }
+
         // Delete Receivable
         async function deleteReceivable(id) {
             if (confirm('Are you sure you want to delete this receivable?')) {
@@ -232,7 +285,39 @@
             }
         }
 
-        // Load data when page loads
+           // View Receivable
+           async function viewReceivable(id) {
+               try {
+                   const response = await fetch(`/api/accounts-receivable/${id}`);
+                   const entry = await response.json();
+                   alert(`Customer ID: ${entry.customer_id}\nCustomer Name: ${entry.customer_name}\nAmount: ${entry.amount}\nDue Date: ${entry.due_date}`);
+               } catch (error) {
+                   alert('Failed to view receivable');
+               }
+           }
+
+           // Edit Receivable (simple prompt-based)
+           async function editReceivable(id) {
+               try {
+                   const response = await fetch(`/api/accounts-receivable/${id}`);
+                   const entry = await response.json();
+                   const customer_id = prompt('Customer ID:', entry.customer_id);
+                   const customer_name = prompt('Customer Name:', entry.customer_name);
+                   const amount = prompt('Amount:', entry.amount);
+                   const due_date = prompt('Due Date:', entry.due_date);
+                   if (customer_id && customer_name && amount && due_date) {
+                       await fetch(`/api/accounts-receivable/${id}`, {
+                           method: 'PUT',
+                           headers: { 'Content-Type': 'application/json' },
+                           body: JSON.stringify({ customer_id, customer_name, amount, due_date })
+                       });
+                       fetchReceivables();
+                   }
+               } catch (error) {
+                   alert('Failed to edit receivable');
+               }
+           }
+
         document.addEventListener('DOMContentLoaded', () => {
             fetchPayables();
             fetchReceivables();

@@ -1,22 +1,40 @@
 body, * {
-    font-family: 'Inter', 'Poppins', 'Quicksand', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    background-color: #FDFFFA;
+    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
     margin: 0;
     min-height: 100vh;
     display: flex;
 }
 
 .sidebar {
-    min-height: 100vh;
-    background-color: #262c44;
     width: 260px;
+    background: rgba(0,0,0,0.7);
+    min-height: 100vh;
     padding: 30px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+}
+
+.logo a {
+    font-size: 33px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 40px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logo-img {
+    height: 40px;
+    width: 60px;
+    margin-right: 8px;
 }
 
 .sidebar ul {
@@ -35,7 +53,7 @@ body {
 }
 
 .sidebar ul li a {
-    color: white;
+    color: #ffffff;
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
@@ -43,6 +61,7 @@ body {
     display: block;
     border-radius: 6px;
     transition: color 0.3s, background 0.3s;
+    letter-spacing: 0.5px;
 }
 
 .sidebar ul li a:hover {
@@ -53,12 +72,12 @@ body {
 
 .main-content {
     flex: 1;
-    padding: 10px 60px;
+    padding: 60px;
     color: #333;
     background: rgba(255,255,255,0.85);
     border-radius: 16px;
-    margin: 0 40px;
-    text-align: center;
+    margin: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 .dashboard-cards {
@@ -69,37 +88,32 @@ body {
 }
 
 .card {
-    background: linear-gradient(to right, #CC79F0, #3E7EF7);
+    background: linear-gradient(135deg, #86a8e7 60%, #91eac9 100%);
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* upgraded shadow effect */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
     padding: 32px 24px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #222;
+    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); /* deeper shadow on hover */
-}
-
 .card h3 {
     margin-bottom: 12px;
     font-size: 22px;
-    color: #333;
+    color: #007bff;
 }
 
 .card p {
     margin-bottom: 24px;
     font-size: 16px;
-    color: white;
 }
 
 .card-btn {
-    background: white;
-    color: #333;
+    background: #007bff;
+    color: #fff;
     padding: 10px 0;
     border: none;
     border-radius: 6px;
