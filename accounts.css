@@ -1,10 +1,10 @@
-/* Shared Font and Background */
+
 body, * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Inter', 'Poppins', 'Quicksand', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eac9);
+    background-color: #FDFFFA;
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -12,7 +12,7 @@ body {
 
 .sidebar {
     width: 260px;
-    background: rgba(0,0,0,0.7);
+    background-color: #262c44;
     min-height: 100vh;
     padding: 30px 0;
     display: flex;
@@ -74,24 +74,25 @@ body {
 
 .main-content {
     flex: 1;
-    padding: 60px;
+    padding: 10px 60px;
     color: #333;
     background: rgba(255,255,255,0.85);
     border-radius: 16px;
     margin: 40px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-top: 15px;
 }
 
 .accounts-section {
     margin-bottom: 40px;
-    background: linear-gradient(135deg, #86a8e7 60%, #91eac9 100%);
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* deeper and darker shadow */
 }
 
+
 .accounts-section h2 {
-    color: #007bff;
+    color: #333;
     font-size: 26px;
     margin-bottom: 20px;
     border-bottom: 2px solid rgba(255,255,255,0.3);
@@ -149,7 +150,7 @@ th, td {
 }
 
 th {
-    background-color: rgba(0,0,0,0.05);
+    background-color: #FDFFFA;
     font-weight: 600;
     color: #333;
 }
