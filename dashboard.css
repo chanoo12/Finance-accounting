@@ -4,7 +4,7 @@ body, * {
 }
 
 body {
-    background-color: #FDFFFA;
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -56,10 +56,10 @@ body {
     flex: 1;
     padding: 10px 60px;
     color: #333;
-    background: rgba(255,255,255,0.85);
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     border-radius: 16px;
-    margin: 0 40px;
     text-align: center;
+    margin-left: 0;
 }
 
 .dashboard-cards {
@@ -70,7 +70,7 @@ body {
 }
 
 .card {
-    background: linear-gradient(to right, #CC79F0, #3E7EF7);
+    background:#FDFFFA;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* upgraded shadow effect */
     padding: 32px 24px;
@@ -95,7 +95,7 @@ body {
 .card p {
     margin-bottom: 24px;
     font-size: 16px;
-    color: white;
+    color: #4A4A4A;
 }
 
 .card-btn {
@@ -114,4 +114,9 @@ body {
 .card-btn:hover {
     background: #0056b3;
     color: #e0e0e0;
+}
+
+.card a {
+    background-color: #6E62BF;
+    color: white;
 }

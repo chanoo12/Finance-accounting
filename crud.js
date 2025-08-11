@@ -1,7 +1,4 @@
-// Handles CRUD for General Ledger, Accounts, and Budgeting
-// This script will be included in general-ledger.html, accounts.html, and budgeting.html
 
-// ========== GENERAL LEDGER CRUD ==========
 async function fetchLedgerEntries() {
     const res = await fetch('/api/ledger');
     return res.json();
@@ -30,7 +27,6 @@ async function deleteLedgerEntry(id) {
     return res.json();
 }
 
-// ========== ACCOUNTS PAYABLE/RECEIVABLE CRUD ==========
 async function fetchPayables() {
     const res = await fetch('/api/accounts-payable');
     return res.json();

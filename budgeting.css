@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     display: flex;
     margin: 0;
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
 }
 
 .sidebar {
@@ -59,10 +60,9 @@ body {
     flex: 1;
     padding: 30px 60px;
     color: #333;
-    background-color: #FDFFFA;
+    background: linear-gradient(to right, #CC79F0, #3E7EF7);
     border-radius: 16px;
-    margin: 40px;
-    margin-top: 0;
+    margin: 0;
 }
 
 
@@ -75,7 +75,7 @@ body {
 
 
 .form-container {
-    background: linear-gradient(to right, #CC79F0, #3E7EF7);
+    background-color: #FDFFFA;
     padding: 25px;
     border-radius: 12px;
     margin-bottom: 30px;
@@ -96,7 +96,7 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #fff;
+    color: #4F4F4F;
     font-weight: 500;
 }
 
@@ -107,6 +107,7 @@ body {
     border-radius: 6px;
     font-size: 14px;
     transition: border-color 0.3s;
+    background-color: #d8ecea;
 }
 
 .form-group input:focus {
@@ -115,7 +116,7 @@ body {
 
 /* Table Container */
 .table-container {
-    background: linear-gradient(to right, #CC79F0, #3E7EF7);
+    background-color: #FDFFFA;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* deeper and darker shadow to match */

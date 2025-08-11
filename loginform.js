@@ -10,10 +10,10 @@ function login(e) {
 
     if (username === correctusername && password === correctpassword) {
         errorMsg.textContent = '';
-        window.location.href = 'home.html'; 
+        window.location.href = 'dashboard.html'; 
     } else {
         errorMsg.textContent = 'Invalid username or password. Please try again.';
     }
 }
 
-document.getElementById('errorMsg').style.color = 'red';
+document.getElementById('errorMsg').style.color = 'red';    
