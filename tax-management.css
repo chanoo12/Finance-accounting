@@ -1,6 +1,3 @@
-/* tax-management.css */
-
-/* Main layout overrides for Tax Management */
 :root{
     --bg: #f6f7fb;
     --card: rgba(255,255,255,0.85);
@@ -21,7 +18,7 @@ body{
     -moz-osx-font-smoothing:grayscale;
     line-height:1.4;
 }
-/* Sidebar */
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -71,17 +68,17 @@ body{
 }
 
 .sidebar nav ul li a:hover {
-    background: #334155; /* Hover color */
+    background: #334155; 
     padding-left: 25px;
 }
 
 .sidebar nav ul li a.active{
-    background: #0ea5e9; /* Active color */
+    background: #0ea5e9;
     color: white;
     font-weight: bold;
 }
     .table-wrap {
-      background: #fff;
+      background: rgba(255,255,255,0.85);
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       padding: 1rem;
@@ -105,7 +102,7 @@ body{
       text-align: right;
       white-space: nowrap;
     }
-/* Main content */
+
 .main-content {
     margin-left: 250px;
     padding: 20px;

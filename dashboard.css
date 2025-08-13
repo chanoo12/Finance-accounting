@@ -1,4 +1,4 @@
-/* ===== Minimal iOS-like style (dashboard.css) ===== */
+ /* ===== Minimal iOS-like style (dashboard.css) ===== */
 
 /* Global / body */
 :root{
@@ -13,7 +13,7 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-    margin:0;
+    margin: 0;
     font-family: 'Poppins', system-ui, -apple-system, "SF Pro Display", "Helvetica Neue", Arial;
     background: linear-gradient(to right, #CC79F0, #3E7EF7);
     color:#0f1724;
@@ -22,8 +22,6 @@ body{
     line-height:1.4;
 }
 
-/* Sidebar */
-/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
@@ -285,4 +283,8 @@ canvas{width:100% !important; height:100% !important;}
     .top-cards{flex-direction:column}
 }
 
-
+.graph-header {
+    display: flex;
+    flex-direction: column; 
+    gap: 6px; 
+}
