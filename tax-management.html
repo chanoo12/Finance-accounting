@@ -1,0 +1,95 @@
+<!-- tax-management.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tax Management</title>
+
+  <link rel="stylesheet" href="../css/tax-management.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo"></div>
+    <div class="brand-text">
+      <div class="title">SpendMate</div>
+      <div class="sub">Finance</div>
+    </div>
+  </div>
+  <nav>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="general-ledger.html">General Ledger</a></li>
+        <li><a href="asset-management.html">Asset Management</a></li>
+        <li><a href="tax-management.html" class="active">Tax Management</a></li>
+        <li><a href="financial-reporting.html">Financial Reporting</a></li>
+      </ul>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content">
+  <div class="topbar">
+    <h1>Tax Management</h1>
+  </div>
+  <div class="table-wrap">
+    <table class="tx-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Employee</th>
+          <th>Gross</th>
+          <th>Withholding</th>
+          <th class="amount-col">Net</th>
+        </tr>
+      </thead>
+      <tbody id="taxTable"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+  const KEY_TAX = 'tax_records_v1';
+
+  function fmt(n) {
+    return '₱' + Number(n).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+
+  function renderTax() {
+    const rows = JSON.parse(localStorage.getItem(KEY_TAX) || '[]');
+    const tbody = document.getElementById('taxTable');
+    tbody.innerHTML = '';
+    rows.slice().reverse().forEach(r => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${r.date}</td>
+        <td>${r.employee}</td>
+        <td>${fmt(r.gross)}</td>
+        <td>${fmt(r.withholding)}</td>
+        <td class="amount-col">${fmt(r.net)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Active link highlighting
+  document.querySelectorAll('.sidebar nav a').forEach(link => {
+    if (link.href === window.location.href) {
+      link.parentElement.classList.add('active');
+    }
+  });
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === KEY_TAX) renderTax();
+  });
+
+  renderTax();
+</script>
+<script src="../javascript/financial-reporting.js"></script>
+</body>
+</html>

@@ -1,42 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SpendMate Finance Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Quicksand&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>SpendMate - Finance Dashboard</title>
 
+    <!-- Fonts (system-first, fallback) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
-<body>
-    <div class="sidebar">
-        <ul>    
-            <li><a href="general-ledger.html">General Ledger</a></li>
-            <li><a href="accounts.html">Accounts Payable/Receivable</a></li>
-            <li><a href="budgeting.html">Budgeting</a></li>
-            
+    <body>
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo"></div>
+                <div class="brand-text">
+                    <div class="title">SpendMate</div>
+                    <div class="sub">Finance</div>
+                </div>
+            </div>
+
+            <nav>
+        <ul>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="general-ledger.html" >General Ledger</a></li>
+            <li><a href="asset-management.html" >Asset Management</a></li>
+            <li><a href="tax-management.html">Tax Management</a></li>
+            <li><a href="financial-reporting.html">Financial Reporting</a></li>
         </ul>
-    </div>
-    <div class="main-content">
-        <h1>Welcome to SpendMate Finance Dashboard</h1>
-        <div class="dashboard-cards">
-            <div class="card">
-                <h3>General Ledger</h3>
-                <p>Track all financial transactions and balances.</p>
-                <a href="general-ledger.html" class="card-btn">View Ledger</a>
+        </nav>
+        </aside>
+
+        <main class="main-content"><div class="dashboard-header"> 
+                <h1>Finance Dashboard</h1>
             </div>
-            <div class="card">
-                <h3>Accounts Payable/Receivable</h3>
-                <p>Manage invoices, payments, and receivables.</p>
-                <a href="accounts.html" class="card-btn">Manage Accounts</a>
-            </div>
-            
-            <div class="card">
-                <h3>Budgeting</h3>
-                <p>Plan and forecast your finances.</p>
-                <a href="budgeting.html" class="card-btn">Budget & Forecast</a>
-            </div>
-            
+            <header class="topbar">
+                <div class="top-actions">
+                    <button id="refreshBtn" title="Refresh"></button>
+                </div>
+                  
+            </header>
+
+            <!-- Top cards: Income / Expenses / Outcome -->
+            <section class="top-cards">
+
+
+                <div class="stat-card card-income">
+                    <div class="stat-head">
+                        <span>Total Income</span>
+                        <small>All time</small>
+                    </div>
+                    <div class="stat-value" id="cardIncome"></div>
+                </div>
+
+                <div class="stat-card card-expense">
+                    <div class="stat-head">
+                        <span>Total Expenses</span>
+                        <small>All time</small>
+                    </div>
+                    <div class="stat-value" id="cardExpenses"></div>
+                </div>
+
+                <div class="stat-card card-outcome">
+                    <div class="stat-head">
+                        <span>Outcome</span>
+                        <small>Income − Expenses</small>
+                    </div>
+                    <div class="stat-value" id="cardOutcome"></div>
+                </div>
+            </section>
+
+            <!-- Finance area: charts + invoice/transactions -->
+            <section class="finance-section">
+                <div class="charts-column">
+                    <div class="graph-card">
+                        <div class="graph-header">
+                            <h2>Category Totals</h2>
+                            <small>Based on transactions</small>
+                        </div>
+                        <div class="canvas-wrap">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="graph-card">
+                        <div class="graph-header">
+                            <h2>Spending Breakdown</h2>
+                            <small>Expenses only</small>
+                        </div>
+                        <div class="canvas-wrap">
+                            <canvas id="doughnutChart"></canvas>
+                        </div>
+                    </div>
+                        
+                    <div class="stat-card card-outcome" id="assetSummary">
+        <div class="stat-head">
+            <small>Assets</small>
         </div>
+        <div class="stat-value" id="assetCount">0 Assets</div>
+        <small id="assetTotal">Total Cost: ₱0</small><br>
+        <small id="assetDep">Annual Dep: ₱0</small><br>
+        <small id="lastAsset">Last Added: None</small>
     </div>
-</body>
+
+                </div>
+
+                <div class="invoice-column">
+                    <div class="invoice-card">
+                        <div class="invoice-top">
+                            <div>
+                                <p class="muted">Latest Invoice</p>
+                                <p class="invoice-number" id="latestInvoiceNo">—</p>
+                            </div>
+                            <div class="invoice-amt" id="latestInvoiceAmount">₱0</div>
+                        </div>
+
+                        <div class="invoice-info" id="latestInvoiceInfo">
+                            <p class="muted">No invoice yet — add a transaction to create one.</p>
+                        </div>
+
+                        <hr />
+
+                        <div class="tx-controls">
+                            <h3>Transactions</h3>
+                            <button id="clearAllBtn" class="link-btn">Clear All</button>
+                        </div>
+
+                        <!-- Add Transaction Form -->
+                        <form id="txForm" class="tx-form">
+                            <div class="form-row">
+                                <input required type="date" id="txDate" />
+                                <input required type="text" id="txCategory" placeholder="Category (e.g., Food, Rent)" />
+                            </div>
+                            <div class="form-row">
+                                <input required type="number" step="0.01" id="txAmount" placeholder="Amount (e.g., 1500)" />
+                                <select id="txType" required>
+                                    <option value="income">Income</option>
+                                    <option value="expense">Expense</option>
+                                </select>
+                            </div>
+                            <div class="form-row form-actions">
+                                <button type="submit" class="primary-btn">Add Transaction</button>
+                            </div>
+                        </form>
+
+                        <!-- Transaction Table -->
+                        <div class="table-wrap">
+                            <table class="tx-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                        <th class="amount-col">Amount</th>
+                                        <th class="action-col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionTable">
+                                    <!-- Rows inserted dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    <script src="../javascript/dashboard.js"></script>
+    </body>
 </html>
+

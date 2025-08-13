@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/asset.css">
+</head>
+    <body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand">
+            <div class="title">SpendMate</div>
+            <div class="sub">Finance</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="general-ledger.html">General Ledger</a></li>
+                <li ><a href="asset-management.html" class="active">Asset Management</a></li>
+                <li><a href="tax-management.html">Tax Management</a></li>
+                <li><a href="financial-reporting.html">Financial Reporting</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="topbar">
+            <h1>Asset Management</h1>
+        </div>
+
+        <div class="asset-container">
+            <!-- Asset Form -->
+            <div class="card wide">
+                <div class="card-header">Add New Asset</div>
+                <form id="assetForm" class="tx-form">
+                    <div class="form-grid">
+                        <input type="text" id="assetName" placeholder="Asset Name" required>
+                        <input type="date" id="purchaseDate" required>
+                        <input type="number" id="cost" placeholder="Cost" step="0.01" required>
+                        <input type="number" id="salvageValue" placeholder="Salvage Value" step="0.01" required>
+                        <input type="number" id="usefulLife" placeholder="Useful Life (Years)" required>
+                        <input type="text" id="depreciation" placeholder="Annual Depreciation" readonly>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Add Asset</button>
+                    </div>
+                </form>
+            </div>
+
+    <!-- Asset Table -->
+    <div class="card wide">
+        <div class="card-header">Asset List</div>
+        <div class="table-actions">
+            <button id="deleteSelected" class="danger-btn">Delete Selected</button>
+        </div>
+        <div class="table-wrap">
+            <table class="tx-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th>Asset Name</th>
+                        <th>Purchase Date</th>
+                        <th>Cost</th>
+                        <th>Salvage Value</th>
+                        <th>Useful Life</th>
+                        <th>Annual Depreciation</th>
+                    </tr>
+                </thead>
+                <tbody id="assetTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <script src="../javascript/asset-management.js"></script>
+
+    </body>
+</html>

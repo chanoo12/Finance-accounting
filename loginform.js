@@ -5,7 +5,7 @@ function login(e) {
     const password = document.getElementById('password').value;
     const errorMsg = document.getElementById('errorMsg');
 
-    const correctusername = 'admin';
+    const correctusername = 'admin';    
     const correctpassword = 'admin';
 
     if (username === correctusername && password === correctpassword) {
@@ -16,4 +16,4 @@ function login(e) {
     }
 }
 
-document.getElementById('errorMsg').style.color = 'red';    
+document.getElementById('errorMsg').style.color = 'red';

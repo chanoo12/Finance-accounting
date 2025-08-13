@@ -1,4 +1,4 @@
-/* === General Styles === */
+
 html, body {
     font-family: 'Inter', 'Poppins', 'Quicksand', sans-serif;
     background-color: #FDFFFA;
@@ -9,7 +9,6 @@ html, body {
     position: relative;
 }
 
-/* === Navbar === */
 .navbar {
     width: 100%;
     padding: 10px 0;
@@ -73,12 +72,11 @@ ul li a:hover {
     color: aquamarine;
 }
 
-/* === Login Form === */
 .login-container {
     background: linear-gradient(to right, #CC79F0, #3E7EF7);
     padding: 30px 40px;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); /* more visible shadow */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); 
     width: 300px;
     position: absolute;
     top: 50%;
@@ -126,7 +124,6 @@ ul li a:hover {
     background: #0056b3;
 }
 
-/* === Error Message === */
 .error {
     color: red;
     text-align: center;
